@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfirebase/Model/FirebaseHelper.dart';
 
 class LogController extends StatefulWidget {
   const LogController({super.key});
@@ -10,10 +12,10 @@ class LogController extends StatefulWidget {
 class _LogControllerState extends State<LogController> {
   bool _log = true;
   String log = "Login";
-  TextEditingController _emailTec=TextEditingController();
-  TextEditingController _passwordTec=TextEditingController();
-  TextEditingController _nomTec=TextEditingController();
-  TextEditingController _prenomTec=TextEditingController();
+  TextEditingController _emailTec = TextEditingController();
+  TextEditingController _passwordTec = TextEditingController();
+  TextEditingController _nomTec = TextEditingController();
+  TextEditingController _prenomTec = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,49 +55,56 @@ class _LogControllerState extends State<LogController> {
   }
 
   List<Widget> ListTxtField() {
-    List<Widget> listA = [
+    List<Widget> listAuth = [
       const SizedBox(height: 30),
-      TextF("Entrer votre email", _emailTec),
+      TextF("Entrer votre email", _emailTec,email: true),
       TextF("Entrer votre passeword", obscure: true, _passwordTec),
       const SizedBox(height: 30),
     ];
-    List<Widget> listL = [
+    List<Widget> listLog = [
       SizedBox(height: 20),
-      TextF("Entrer votre email", _emailTec),
+      TextF("Entrer votre email", _emailTec,email: true),
       TextF("Entrer votre passeword", obscure: true, _passwordTec),
       TextF("Entrer votre Nom", _nomTec),
       TextF("Entrer votre Prenom", _prenomTec),
       SizedBox(height: 20),
     ];
     if (_log) {
-      return listA;
+      return listAuth;
     } else {
-      return listL;
+      return listLog;
     }
   }
 
-  Widget TextF(String hint,entry, {bool obscure = false}) {
+  Widget TextF(String hint, entry, {bool obscure = false,bool email=false}) {
     return TextField(
       controller: entry,
+      keyboardType: email ?TextInputType.emailAddress:TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
       ),
-      
       obscureText: obscure,
     );
   }
 
   _handlelog() {
-    if (_emailTec.text!="") {
-      if (_passwordTec.text!= "") {
+    if (_emailTec.text != "") {
+      if (_passwordTec.text != "") {
         if (_log) {
-          //TODO Methoder pour loger
+          FirebaseHelper().handleSignIn(_emailTec.text, _passwordTec.text)
+              .then((User) {
+            print(User);
+          }).catchError((err){
+            alert(err.toString());
+          });
         } else {
           if (_nomTec.text != "") {
             if (_prenomTec.text != "") {
-              //TODO Methode pour enregistrer
-          print(_emailTec.text);
-
+              FirebaseHelper().handleCreate(_emailTec.text, _passwordTec.text,
+                  _prenomTec.text, _nomTec.text).then((user){
+                    print(user);
+                  });
+              print(_emailTec.text);
             } else {
               alert("Veuiller renseigner le prenom");
             }
