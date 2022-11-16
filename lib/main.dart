@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +25,13 @@ class MyApp extends StatelessWidget {
 }
 
 Widget _handleAuth() {
+  
   return StreamBuilder(
       builder: ((context, snapshot) {
         if (snapshot.hasData) {
           return MainApp();
         } else {
-          return LogController();
+          return  const LogController();
         }
       }),
       stream: FirebaseAuth.instance.authStateChanges());

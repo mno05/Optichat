@@ -2,13 +2,13 @@ import 'package:firebase_database/firebase_database.dart';
 
 class MyUser{
   String? Uid;
-  String prenom="";
-  String nom="";
-  String imageUrl="";
-  String initiales="";
+  late String prenom;
+  late String nom;
+  late String imageUrl;
+  late String initiales;
   
   MyUser(DataSnapshot Snapshot){
-     Uid = Snapshot.key;
+    Uid = Snapshot.key;
     dynamic map = Snapshot.value;
     prenom= map["prenom"];
     nom= map["nom"];
