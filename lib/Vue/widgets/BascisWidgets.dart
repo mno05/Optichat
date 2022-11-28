@@ -17,4 +17,13 @@ class BasicsWidgets{
           );
         }));
   }
+
+  static Load(BuildContext context){
+      showDialog(context: context, builder: ((context) {
+        return Center(child: CircularProgressIndicator());
+      }));
+  }
+  static BackLoad(BuildContext context){
+    Navigator.pop(context);
+  }
 }
