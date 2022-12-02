@@ -26,7 +26,8 @@ class SplashScreen extends StatelessWidget {
           transitionOnUserGestures: true,
           tag: 'Icon',
           child: Container(
-                width: 100,
+                width: 120,
+                height: 200,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

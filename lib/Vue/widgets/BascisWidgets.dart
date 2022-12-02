@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-class BasicsWidgets{
-  static alert(String msg, BuildContext context) {
-    String Titre = "Erreur";
+import 'package:flutterfirebase/Model/DefaulValues.dart';
+
+class BasicsWidgets {
+  static alert(String msg, BuildContext context,{Titre="Message"}) {
+    Navigator.pop(context);
     return showDialog(
         barrierDismissible: false,
         context: context,
@@ -18,12 +20,28 @@ class BasicsWidgets{
         }));
   }
 
-  static Load(BuildContext context){
-      showDialog(context: context, builder: ((context) {
-        return Center(child: CircularProgressIndicator());
-      }));
+  static Load(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          return Center(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              ),
+              child: CircularProgressIndicator(
+                color: Def.defColor,
+              ),
+            ),
+          );
+        }));
   }
-  static BackLoad(BuildContext context){
+
+  static BackLoad(BuildContext context) {
     Navigator.pop(context);
   }
 }

@@ -4,7 +4,18 @@ import 'package:flutterfirebase/Vue/Deleyed_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LogView extends StatefulWidget {
-  const LogView({super.key});
+  final VoidCallback signInWithGoogle;
+  final VoidCallback signInWithFacebook;
+  final VoidCallback SignWithNumber;
+  final VoidCallback signINWitEmail;
+
+  const LogView({
+    super.key,
+    required this.signInWithGoogle,
+    required this.signINWitEmail,
+    required this.SignWithNumber,
+    required this.signInWithFacebook,
+  });
 
   @override
   State<LogView> createState() => _LogViewState();
@@ -19,10 +30,8 @@ class _LogViewState extends State<LogView> {
     return Scaffold(
       // appBar: AppBar(title: const Text("Authentification")),
       body: Center(
-
         child: SingleChildScrollView(
             child: Column(
-              
           children: [
             Hero(
               transitionOnUserGestures: true,
@@ -45,13 +54,13 @@ class _LogViewState extends State<LogView> {
                 ),
               ),
             ),
-            
+
             DelayedAnimation(
               delay: 100,
               child: Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: EdgeInsets.all(20),
                 child: Text(
-                  "Rejoinnez la majorité des congolais et utiliser OptiChat",
+                  "Rejoignez la majorité des congolais et utiliser OptiChat",
                   style: GoogleFonts.nunito(
                     fontSize: width * 0.02,
                     color: Colors.black54,
@@ -66,25 +75,35 @@ class _LogViewState extends State<LogView> {
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text(
                   "Connectez vous par",
-                  style: GoogleFonts.nunito(fontSize: width * 0.03,fontWeight: FontWeight.bold),
+                  style: GoogleFonts.nunito(
+                      fontSize: width * 0.03, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             DelayedAnimation(
               delay: 1200,
-              child: ContactButton(context,
-                  color: Def.defColor,
-                  icon: Icons.mail_outline_outlined,
-                  text: "Email"),
+              child: ContactButton(
+                context,
+                color: Def.defColor,
+                icon: Icons.mail_outline_outlined,
+                text: "Email",
+                onTap: widget.signINWitEmail,
+              ),
             ),
             DelayedAnimation(
               delay: 1500,
-              child: ContactButton(context,
-                  color: Colors.white, IsGoogle: true, text: "Google"),
+              child: ContactButton(
+                context,
+                onTap: widget.signInWithGoogle,
+                color: Colors.white,
+                IsGoogle: true,
+                text: "Google",
+              ),
             ),
             DelayedAnimation(
               delay: 1800,
               child: ContactButton(context,
+                  onTap: widget.signInWithFacebook,
                   color: Colors.blue.shade800,
                   icon: Icons.facebook,
                   text: "Facebook"),
@@ -94,7 +113,8 @@ class _LogViewState extends State<LogView> {
               child: ContactButton(context,
                   color: Colors.amber.shade600,
                   icon: Icons.phone,
-                  text: "TELEPHONE"),
+                  text: "TELEPHONE", onTap: widget.SignWithNumber,
+              ),
             ),
             //   TextButton(
             //       onPressed: () => setState(() {
@@ -110,11 +130,14 @@ class _LogViewState extends State<LogView> {
     );
   }
 
-  Widget ContactButton(BuildContext context,
-      {required Color color,
-      IconData? icon,
-      bool IsGoogle = false,
-      required String text}) {
+  Widget ContactButton(
+    BuildContext context, {
+    required Color color,
+    IconData? icon,
+    bool IsGoogle = false,
+    required String text,
+    required VoidCallback onTap,
+  }) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return InkWell(
@@ -160,9 +183,7 @@ class _LogViewState extends State<LogView> {
           ],
         ),
       ),
-      onTap: (() {
-        print('Tape');
-      }),
+      onTap: onTap,
     );
   }
 }
