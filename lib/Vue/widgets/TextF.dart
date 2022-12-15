@@ -5,7 +5,9 @@ class TextF extends StatelessWidget {
   bool obscure = false; 
   bool email = false; 
   bool Number = false;
-   TextF(this.hint, this.entry,{super.key,this.obscure=false,this.email=false,this.Number=false});
+  void Function(String)? onChanged;
+
+   TextF(this.hint, this.entry,{super.key,this.obscure=false,this.email=false,this.Number=false,this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class TextF extends StatelessWidget {
         color: Colors.black12,
       ),
       child: TextField(
+        onChanged: onChanged,
         controller: entry,
         keyboardType: (email)
             ? TextInputType.emailAddress

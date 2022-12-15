@@ -70,26 +70,36 @@ class FirebaseHelper {
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
-  Future<void> SignWithNumber(String Number,{String? code}) async {
+  Future<String> SignWithNumber(String Number,{String? code}) async {
+   late String smsCode;
+   String authStatus="";
+
     await auth.verifyPhoneNumber(
       phoneNumber: Number,
       verificationCompleted: (PhoneAuthCredential credential) async {
+      
       await auth.signInWithCredential(credential);
+      
       },
       codeAutoRetrievalTimeout: (String verificationId) {
 
       },
       codeSent: (String verificationId, int? forceResendingToken) async{
         if(code!=null){
-        String smsCode = code;
+         smsCode = code;
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: smsCode);
 
     // Sign the user in (or link) with the credential
     await auth.signInWithCredential(credential);
         }
+        else{
+          smsCode="Pas";
+        }
       },
       verificationFailed: (FirebaseAuthException error) {},
+      
     );
+    return smsCode;
   }
 }

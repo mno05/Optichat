@@ -4,7 +4,8 @@ class ButtonValider extends StatelessWidget {
   BuildContext context;
   String text;
   VoidCallback onTap;
-  ButtonValider(this.context, {required this.text, required this.onTap});
+  Color? color;
+  ButtonValider(this.context, {required this.text, required this. onTap,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ButtonValider extends StatelessWidget {
         width: width * 0.4,
         height: height * 0.06,
         decoration: BoxDecoration(
-            color: Colors.amber.shade600,
+            color: (color==null)? Colors.amber.shade600:color,
             borderRadius: BorderRadius.circular(20)),
         child: Center(
             child: Text(

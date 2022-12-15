@@ -170,6 +170,8 @@ class _EmailState extends State<Email> {
                       _prenomTec.text, _nomTec.text)
                   .then((user) {
                 Navigator.pop(context);
+                Navigator.pop(context);
+
                 print(user);
               }).catchError((err) {
                 print(err.toString());
